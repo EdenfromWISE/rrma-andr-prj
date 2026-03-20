@@ -23,7 +23,7 @@ public class RoomFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
-        roomController = new RoomController();
+        roomController = new RoomController(this);
 
         etRoomCode = findViewById(R.id.etRoomCode);
         etRoomName = findViewById(R.id.etRoomName);
@@ -74,7 +74,7 @@ public class RoomFormActivity extends AppCompatActivity {
         double price = Double.parseDouble(priceStr);
 
         if (existingRoom == null) {
-            roomController.addRoom(code, name, address, price, description, isAvailable, tenantName, phoneNumber);
+            roomController.addRoom(code, name, address, price, description, isAvailable, tenantName, phoneNumber, null);
             Toast.makeText(this, "Room added", Toast.LENGTH_SHORT).show();
         } else {
             existingRoom.setRoomCode(code);

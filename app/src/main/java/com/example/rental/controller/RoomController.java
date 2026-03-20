@@ -40,6 +40,18 @@ public class RoomController {
         }
     }
 
+    public String validateInput(String name, String address, String priceStr) {
+        if (name.isEmpty()) return "Name cannot be empty";
+        if (address.isEmpty()) return "Address cannot be empty";
+        if (priceStr.isEmpty()) return "Price cannot be empty";
+        try {
+            Double.parseDouble(priceStr);
+        } catch (NumberFormatException e) {
+            return "Invalid price format";
+        }
+        return null;
+    }
+
     public void addRoom(String roomCode, String name, String address, double price, String description, 
                         boolean isAvailable, String tenantName, String phoneNumber, String imagePath) {
         Room room = new Room(0, roomCode, name, address, price, description, isAvailable, tenantName, phoneNumber, imagePath);
