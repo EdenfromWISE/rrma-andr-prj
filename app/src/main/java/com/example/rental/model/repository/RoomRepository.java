@@ -1,40 +1,42 @@
 package com.example.rental.model.repository;
 
-import android.app.Application;
-import androidx.lifecycle.LiveData;
-import com.example.rental.model.dao.RoomDao;
-import com.example.rental.model.database.AppDatabase;
 import com.example.rental.model.entity.Room;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class RoomRepository {
-    private RoomDao roomDao;
-    private LiveData<List<Room>> allRooms;
-    private static final int NUMBER_OF_THREADS = 4;
-    private static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private List<Room> roomList;
+    private int nextId = 1;
 
-    public RoomRepository(Application application) {
-        AppDatabase db = AppDatabase.getDatabase(application);
-        roomDao = db.roomDao();
-        allRooms = roomDao.getAllRooms();
+    public RoomRepository() {
+        roomList = new ArrayList<>();
+        // Khởi tạo một số dữ liệu mẫu phong phú hơn
+        roomList.add(new Room(nextId++, "Phòng VIP 01", "123 Cách Mạng Tháng 8, Quận 3", 5000000, "Phòng đầy đủ tiện nghi, view đẹp, ban công rộng.", true));
+        roomList.add(new Room(nextId++, "Phòng Studio", "45 Nguyễn Đình Chiểu, Quận 1", 7500000, "Phòng thiết kế hiện đại, phù hợp cho người đi làm.", false));
+        roomList.add(new Room(nextId++, "Phòng Giá Rẻ", "789 Kha Vạn Cân, Thủ Đức", 1800000, "Phòng nhỏ gọn, an ninh tốt, gần trường đại học.", true));
+        roomList.add(new Room(nextId++, "Căn hộ 202", "12 Lê Lợi, Quận Gò Vấp", 4200000, "Phòng có máy lạnh, máy giặt riêng, lối đi riêng.", true));
+        roomList.add(new Room(nextId++, "Phòng Trọ A1", "56 Bùi Viện, Quận 1", 3500000, "Phòng ngay trung tâm, phù hợp khách du lịch thuê ngắn hạn.", true));
     }
 
-    public LiveData<List<Room>> getAllRooms() {
-        return allRooms;
+    public List<Room> getAllRooms() {
+        return roomList;
     }
 
     public void insert(Room room) {
-        databaseWriteExecutor.execute(() -> {
-            roomDao.insertRoom(room);
-        });
+        room.setId(nextId++);
+        roomList.add(room);
+    }
+
+    public void update(Room updatedRoom) {
+        for (int i = 0; i < roomList.size(); i++) {
+            if (roomList.get(i).getId() == updatedRoom.getId()) {
+                roomList.set(i, updatedRoom);
+                return;
+            }
+        }
     }
 
     public void delete(Room room) {
-        databaseWriteExecutor.execute(() -> {
-            roomDao.deleteRoom(room);
-        });
+        roomList.removeIf(r -> r.getId() == room.getId());
     }
 }
