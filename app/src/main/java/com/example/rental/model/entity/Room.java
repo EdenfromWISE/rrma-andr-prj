@@ -1,8 +1,12 @@
 package com.example.rental.model.entity;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
+@Entity(tableName = "rooms")
 public class Room implements Serializable {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String roomCode;
     private String name;
@@ -12,8 +16,9 @@ public class Room implements Serializable {
     private boolean isAvailable;
     private String tenantName;
     private String phoneNumber;
+    private String imagePath; // Path to the stored image
 
-    public Room(int id, String roomCode, String name, String address, double price, String description, boolean isAvailable, String tenantName, String phoneNumber) {
+    public Room(int id, String roomCode, String name, String address, double price, String description, boolean isAvailable, String tenantName, String phoneNumber, String imagePath) {
         this.id = id;
         this.roomCode = roomCode;
         this.name = name;
@@ -23,6 +28,7 @@ public class Room implements Serializable {
         this.isAvailable = isAvailable;
         this.tenantName = tenantName;
         this.phoneNumber = phoneNumber;
+        this.imagePath = imagePath;
     }
 
     // Getters and Setters
@@ -44,4 +50,6 @@ public class Room implements Serializable {
     public void setTenantName(String tenantName) { this.tenantName = tenantName; }
     public String getPhoneNumber() { return phoneNumber; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public String getImagePath() { return imagePath; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 }

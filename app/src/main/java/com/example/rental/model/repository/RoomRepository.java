@@ -1,5 +1,6 @@
 package com.example.rental.model.repository;
 
+import android.content.Context;
 import com.example.rental.model.entity.Room;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +9,12 @@ public class RoomRepository {
     private List<Room> roomList;
     private int nextId = 1;
 
-    public RoomRepository() {
+    public RoomRepository(Context context) {
         roomList = new ArrayList<>();
-        // Seed data
-        roomList.add(new Room(nextId++, "P101", "Phòng VIP 01", "123 Cách Mạng Tháng 8, Quận 3", 5000000, "Phòng đầy đủ tiện nghi", true, "Nguyễn Văn A", "0901234567"));
-        roomList.add(new Room(nextId++, "P102", "Phòng Studio", "45 Nguyễn Đình Chiểu, Quận 1", 7500000, "Phòng thiết kế hiện đại", false, "Trần Thị B", "0907654321"));
-        roomList.add(new Room(nextId++, "P103", "Phòng Giá Rẻ", "789 Kha Vạn Cân, Thủ Đức", 1800000, "Gần trường đại học", true, "", ""));
+        // Seed data with placeholder image paths
+        roomList.add(new Room(nextId++, "P101", "Phòng VIP 01", "123 Cách Mạng Tháng 8, Quận 3", 5000000, "Phòng đầy đủ tiện nghi", true, "Nguyễn Văn A", "0901234567", ""));
+        roomList.add(new Room(nextId++, "P102", "Phòng Studio", "45 Nguyễn Đình Chiểu, Quận 1", 7500000, "Phòng thiết kế hiện đại", false, "Trần Thị B", "0907654321", ""));
+        roomList.add(new Room(nextId++, "P103", "Phòng Giá Rẻ", "789 Kha Vạn Cân, Thủ Đức", 1800000, "Gần trường đại học", true, "", "", ""));
     }
 
     public List<Room> getAllRooms() {
@@ -21,7 +22,9 @@ public class RoomRepository {
     }
 
     public void insert(Room room) {
-        room.setId(nextId++);
+        if (room.getId() == 0) {
+            room.setId(nextId++);
+        }
         roomList.add(room);
     }
 

@@ -1,42 +1,48 @@
 package com.example.rental.controller;
 
+import android.content.Context;
+import android.net.Uri;
 import com.example.rental.model.entity.Room;
 import com.example.rental.model.repository.RoomRepository;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 public class RoomController {
-    private static RoomRepository repository;
+    private RoomRepository repository;
 
-    public RoomController() {
-        if (repository == null) {
-            repository = new RoomRepository();
-        }
+    public RoomController(Context context) {
+        repository = new RoomRepository(context);
     }
 
     public List<Room> getAllRooms() {
         return repository.getAllRooms();
     }
 
-    public String validateInput(String name, String address, String priceStr) {
-        if (name == null || name.trim().isEmpty()) {
-            return "Tên phòng không được để trống";
-        }
-        if (address == null || address.trim().isEmpty()) {
-            return "Địa chỉ không được để trống";
-        }
+    public String saveImageToInternalStorage(Context context, Uri uri) {
         try {
-            double price = Double.parseDouble(priceStr);
-            if (price <= 0) {
-                return "Giá thuê phải lớn hơn 0";
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            String fileName = "room_" + System.currentTimeMillis() + ".jpg";
+            File file = new File(context.getFilesDir(), fileName);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
             }
-        } catch (NumberFormatException e) {
-            return "Giá thuê phải là số hợp lệ";
+            outputStream.close();
+            inputStream.close();
+            return file.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
-    public void addRoom(String roomCode, String name, String address, double price, String description, boolean isAvailable, String tenantName, String phoneNumber) {
-        Room room = new Room(0, roomCode, name, address, price, description, isAvailable, tenantName, phoneNumber);
+    public void addRoom(String roomCode, String name, String address, double price, String description, 
+                        boolean isAvailable, String tenantName, String phoneNumber, String imagePath) {
+        Room room = new Room(0, roomCode, name, address, price, description, isAvailable, tenantName, phoneNumber, imagePath);
         repository.insert(room);
     }
 
