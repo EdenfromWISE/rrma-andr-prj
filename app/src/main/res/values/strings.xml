@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Rental</string>
+    <string name="hint_room_code">Mã phòng</string>
+    <string name="hint_room_name">Tên phòng</string>
+    <string name="hint_room_address">Địa chỉ</string>
+    <string name="hint_room_price">Giá thuê</string>
+    <string name="hint_room_description">Mô tả</string>
+    <string name="hint_tenant_name">Tên người thuê</string>
+    <string name="hint_phone_number">Số điện thoại</string>
+    <string name="btn_save">Lưu</string>
+    <string name="title_add_room">Thêm phòng</string>
+    <string name="title_edit_room">Sửa phòng</string>
+    <string name="delete_confirm_title">Xác nhận xóa</string>
+    <string name="delete_confirm_msg">Bạn có chắc chắn muốn xóa phòng này?</string>
+    <string name="yes">Có</string>
+    <string name="no">Không</string>
 </resources>

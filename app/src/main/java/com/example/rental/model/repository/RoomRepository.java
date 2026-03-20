@@ -10,12 +10,10 @@ public class RoomRepository {
 
     public RoomRepository() {
         roomList = new ArrayList<>();
-        // Khởi tạo một số dữ liệu mẫu phong phú hơn
-        roomList.add(new Room(nextId++, "Phòng VIP 01", "123 Cách Mạng Tháng 8, Quận 3", 5000000, "Phòng đầy đủ tiện nghi, view đẹp, ban công rộng.", true));
-        roomList.add(new Room(nextId++, "Phòng Studio", "45 Nguyễn Đình Chiểu, Quận 1", 7500000, "Phòng thiết kế hiện đại, phù hợp cho người đi làm.", false));
-        roomList.add(new Room(nextId++, "Phòng Giá Rẻ", "789 Kha Vạn Cân, Thủ Đức", 1800000, "Phòng nhỏ gọn, an ninh tốt, gần trường đại học.", true));
-        roomList.add(new Room(nextId++, "Căn hộ 202", "12 Lê Lợi, Quận Gò Vấp", 4200000, "Phòng có máy lạnh, máy giặt riêng, lối đi riêng.", true));
-        roomList.add(new Room(nextId++, "Phòng Trọ A1", "56 Bùi Viện, Quận 1", 3500000, "Phòng ngay trung tâm, phù hợp khách du lịch thuê ngắn hạn.", true));
+        // Seed data
+        roomList.add(new Room(nextId++, "P101", "Phòng VIP 01", "123 Cách Mạng Tháng 8, Quận 3", 5000000, "Phòng đầy đủ tiện nghi", true, "Nguyễn Văn A", "0901234567"));
+        roomList.add(new Room(nextId++, "P102", "Phòng Studio", "45 Nguyễn Đình Chiểu, Quận 1", 7500000, "Phòng thiết kế hiện đại", false, "Trần Thị B", "0907654321"));
+        roomList.add(new Room(nextId++, "P103", "Phòng Giá Rẻ", "789 Kha Vạn Cân, Thủ Đức", 1800000, "Gần trường đại học", true, "", ""));
     }
 
     public List<Room> getAllRooms() {

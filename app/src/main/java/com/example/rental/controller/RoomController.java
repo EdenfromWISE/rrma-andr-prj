@@ -5,19 +5,18 @@ import com.example.rental.model.repository.RoomRepository;
 import java.util.List;
 
 public class RoomController {
-    private RoomRepository repository;
+    private static RoomRepository repository;
 
     public RoomController() {
-        repository = new RoomRepository();
+        if (repository == null) {
+            repository = new RoomRepository();
+        }
     }
 
     public List<Room> getAllRooms() {
         return repository.getAllRooms();
     }
 
-    /**
-     * Ràng buộc dữ liệu (Validation)
-     */
     public String validateInput(String name, String address, String priceStr) {
         if (name == null || name.trim().isEmpty()) {
             return "Tên phòng không được để trống";
@@ -36,9 +35,8 @@ public class RoomController {
         return null;
     }
 
-    public void addRoom(String name, String address, double price, String description, boolean isAvailable) {
-        // ID sẽ được Repository tự động gán
-        Room room = new Room(0, name, address, price, description, isAvailable);
+    public void addRoom(String roomCode, String name, String address, double price, String description, boolean isAvailable, String tenantName, String phoneNumber) {
+        Room room = new Room(0, roomCode, name, address, price, description, isAvailable, tenantName, phoneNumber);
         repository.insert(room);
     }
 
